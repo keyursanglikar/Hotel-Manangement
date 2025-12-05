@@ -1,0 +1,315 @@
+/* .explore-menu{
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+.explore-menu h1{
+    color: #262626;
+    font-weight: 500;
+}
+
+.explore-menu-text{
+    max-width: 60%;
+    color: #808080;
+}
+
+.explore-menu-list{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+    text-align: center;
+    margin: 20px 0px;
+    overflow: scroll;
+}
+
+.explore-menu-list::-webkit-scrollbar{
+    display: none;
+}
+
+.explore-menu-list-item img{
+    width: 7.5vw;
+    min-width: 80px;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: 0.2s;
+}
+
+.explore-menu-list-item p{
+    margin-top: 10px;
+    color: #747474;
+    font-size: max(1.4vw,16px);
+    cursor: pointer;
+}
+
+.explore-menu hr{
+    margin: 10px 0px;
+    height: 2px;
+    background-color: #e2e2e2;
+    border: none;
+}
+
+.explore-menu-list-item .active{
+    border: 4px solid tomato;
+    padding: 2px;
+}
+
+@media (max-width:1050px){
+    .explore-menu-text{
+        max-width: 100%;
+        font-size: 14px;
+    }
+} */
+
+/* frontend/src/components/ExploreMenu/ExploreMenu.css */
+.explore-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    overflow-y: auto;
+}
+
+.explore-menu h1 {
+    color: #262626;
+    font-weight: 500;
+}
+
+.explore-menu-text {
+    max-width: 60%;
+    color: #808080;
+}
+
+.explore-menu-list {
+    display: flex;
+    justify-content: flex-start; /* Changed from space-between */
+    align-items: center;
+    gap: 30px;
+    text-align: center;
+    margin: 20px 0px;
+    /* overflow-x: auto; */
+    padding: 15px 10px;
+    /* scroll-behavior: smooth; */
+}
+
+/* Custom scrollbar styling */
+.explore-menu-list::-webkit-scrollbar {
+    height: 8px;
+    display: block;
+}
+
+.explore-menu-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.explore-menu-list::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+    transition: background 0.3s;
+}
+
+.explore-menu-list::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* For Firefox */
+.explore-menu-list {
+    scrollbar-width: thin;
+    scrollbar-color: #888 #f1f1f1;
+}
+
+/* Navigation arrows */
+.explore-menu-container {
+    position: relative;
+}
+
+.explore-menu-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    opacity: 0.8;
+    transition: all 0.3s;
+}
+
+.explore-menu-nav:hover {
+    opacity: 1;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.explore-menu-nav.prev {
+    left: -20px;
+}
+
+.explore-menu-nav.next {
+    right: -20px;
+}
+
+.explore-menu-nav img {
+    width: 20px;
+    height: 20px;
+}
+
+.explore-menu-nav:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.explore-menu-list-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    min-width: 90px;
+    flex-shrink: 0; /* Prevent items from shrinking */
+    transition: all 0.3s;
+}
+
+.explore-menu-list-item:hover {
+    transform: translateY(-5px);
+}
+
+.explore-menu-list-item img {
+    width: 7.5vw;
+    min-width: 80px;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: 0.2s;
+}
+
+.explore-menu-list-item p {
+    margin-top: 10px;
+    color: #747474;
+    font-size: max(1.4vw, 16px);
+    cursor: pointer;
+    white-space: nowrap; /* Prevent text wrapping */
+}
+
+.explore-menu-list-item .active {
+    border: 4px solid tomato;
+    padding: 2px;
+}
+
+.explore-menu hr {
+    margin: 10px 0px;
+    height: 2px;
+    background-color: #e2e2e2;
+    border: none;
+}
+
+/* Scroll indicator dots */
+.explore-menu-scroll-indicator {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.scroll-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #ddd;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.scroll-dot.active {
+    background: tomato;
+    transform: scale(1.2);
+}
+
+.scroll-dot:hover {
+    background: #bbb;
+}
+
+/* Responsive design */
+@media (max-width: 1050px) {
+    .explore-menu-text {
+        max-width: 100%;
+        font-size: 14px;
+    }
+    
+    .explore-menu-list {
+        gap: 20px;
+        padding: 12px 8px;
+    }
+    
+    .explore-menu-list-item img {
+        width: 9vw;
+    }
+    
+    .explore-menu-list-item p {
+        font-size: 14px;
+    }
+    
+    .explore-menu-nav {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .explore-menu-nav.prev {
+        left: -15px;
+    }
+    
+    .explore-menu-nav.next {
+        right: -15px;
+    }
+}
+
+@media (max-width: 750px) {
+    .explore-menu-list {
+        gap: 15px;
+        padding: 10px 5px;
+    }
+    
+    .explore-menu-list-item {
+        min-width: 70px;
+    }
+    
+    .explore-menu-list-item img {
+        width: 11vw;
+        min-width: 60px;
+    }
+    
+    .explore-menu-list-item p {
+        font-size: 12px;
+    }
+    
+    .explore-menu-nav {
+        display: none; /* Hide arrows on mobile */
+    }
+    
+    .explore-menu-list::-webkit-scrollbar {
+        height: 6px;
+    }
+}
+
+@media (max-width: 480px) {
+    .explore-menu-list {
+        gap: 10px;
+    }
+    
+    .explore-menu-list-item {
+        min-width: 60px;
+    }
+    
+    .explore-menu-list-item img {
+        min-width: 50px;
+    }
+    
+    .explore-menu-list-item p {
+        font-size: 11px;
+    }
+}

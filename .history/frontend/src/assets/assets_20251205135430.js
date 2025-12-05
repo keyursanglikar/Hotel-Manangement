@@ -1,0 +1,807 @@
+// import basket_icon from './basket_icon.png'
+// import logo from './logo.png'
+// import header_img from './header_img.png'
+// import search_icon from './search_icon.png'
+// import menu_1 from './menu_1.png'
+// import menu_2 from './menu_2.png'
+// import menu_3 from './menu_3.png'
+// import menu_4 from './menu_4.png'
+// import menu_5 from './menu_5.png'
+// import menu_6 from './menu_6.png'
+// import menu_7 from './menu_7.png'
+// import menu_8 from './menu_8.png'
+
+// import food_1 from './food_1.png'
+// import food_2 from './food_2.png'
+// import food_3 from './food_3.png'
+// import food_4 from './food_4.png'
+// import food_5 from './food_5.png'
+// import food_6 from './food_6.png'
+// import food_7 from './food_7.png'
+// import food_8 from './food_8.png'
+// import food_9 from './food_9.png'
+// import food_10 from './food_10.png'
+// import food_11 from './food_11.png'
+// import food_12 from './food_12.png'
+// import food_13 from './food_13.png'
+// import food_14 from './food_14.png'
+// import food_15 from './food_15.png'
+// import food_16 from './food_16.png'
+// import food_17 from './food_17.png'
+// import food_18 from './food_18.png'
+// import food_19 from './food_19.png'
+// import food_20 from './food_20.png'
+// import food_21 from './food_21.png'
+// import food_22 from './food_22.png'
+// import food_23 from './food_23.png'
+// import food_24 from './food_24.png'
+// import food_25 from './food_25.png'
+// import food_26 from './food_26.png'
+// import food_27 from './food_27.png'
+// import food_28 from './food_28.png'
+// import food_29 from './food_29.png'
+// import food_30 from './food_30.png'
+// import food_31 from './food_31.png'
+// import food_32 from './food_32.png'
+
+// import add_icon_white from './add_icon_white.png'
+// import add_icon_green from './add_icon_green.png'
+// import remove_icon_red from './remove_icon_red.png'
+// import app_store from './app_store.png'
+// import play_store from './play_store.png'
+// import linkedin_icon from './linkedin_icon.png'
+// import facebook_icon from './facebook_icon.png'
+// import twitter_icon from './twitter_icon.png'
+// import cross_icon from './cross_icon.png'
+// import selector_icon from './selector_icon.png'
+// import rating_starts from './rating_starts.png'
+// import profile_icon from './profile_icon.png'
+// import bag_icon from './bag_icon.png'
+// import logout_icon from './logout_icon.png'
+// import parcel_icon from './parcel_icon.png'
+
+// export const assets = {
+//     logo,
+//     basket_icon,
+//     header_img,
+//     search_icon,
+//     rating_starts,
+//     add_icon_green,
+//     add_icon_white,
+//     remove_icon_red,
+//     app_store,
+//     play_store,
+//     linkedin_icon,
+//     facebook_icon,
+//     twitter_icon,
+//     cross_icon,
+//     selector_icon,
+//     profile_icon,
+//     logout_icon,
+//     bag_icon,
+//     parcel_icon
+// }
+
+// export const menu_list = [
+//     {
+//         menu_name: "Salad",
+//         menu_image: menu_1
+//     },
+//     {
+//         menu_name: "Rolls",
+//         menu_image: menu_2
+//     },
+//     {
+//         menu_name: "Deserts",
+//         menu_image: menu_3
+//     },
+//     {
+//         menu_name: "Sandwich",
+//         menu_image: menu_4
+//     },
+//     {
+//         menu_name: "Cake",
+//         menu_image: menu_5
+//     },
+//     {
+//         menu_name: "Pure Veg",
+//         menu_image: menu_6
+//     },
+//     {
+//         menu_name: "Pasta",
+//         menu_image: menu_7
+//     },
+//     {
+//         menu_name: "Noodles",
+//         menu_image: menu_8
+//     }]
+
+// export const food_list = [
+//     {
+//         _id: "1",
+//         name: "Greek salad",
+//         image: food_1,
+//         price: 12,
+//         description: "Food provides essential nutrients for overall health and well-being",
+//         category: "Salad"
+//     },
+//     {
+//         _id: "2",
+//         name: "Veg salad",
+//         image: food_2,
+//         price: 18,
+//         description: "Food provides essential nutrients for overall health and well-being",
+//         category: "Salad"
+//     }, {
+//         _id: "3",
+//         name: "Clover Salad",
+//         image: food_3,
+//         price: 16,
+//         description: "Food provides essential nutrients for overall health and well-being",
+//         category: "Salad"
+//     }, {
+//         _id: "4",
+//         name: "Chicken Salad",
+//         image: food_4,
+//         price: 24,
+//         description: "Food provides essential nutrients for overall health and well-being",
+//         category: "Salad"
+//     }, {
+//         _id: "5",
+//         name: "Lasagna Rolls",
+//         image: food_5,
+//         price: 14,
+//         description: "Food provides essential nutrients for overall health and well-being",
+//         category: "Rolls"
+//     }, {
+//         _id: "6",
+//         name: "Peri Peri Rolls",
+//         image: food_6,
+//         price: 12,
+//         description: "Food provides essential nutrients for overall health and well-being",
+//         category: "Rolls"
+//     }, {
+//         _id: "7",
+//         name: "Chicken Rolls",
+//         image: food_7,
+//         price: 20,
+//         description: "Food provides essential nutrients for overall health and well-being",
+//         category: "Rolls"
+//     }, {
+//         _id: "8",
+//         name: "Veg Rolls",
+//         image: food_8,
+//         price: 15,
+//         description: "Food provides essential nutrients for overall health and well-being",
+//         category: "Rolls"
+//     }, {
+//         _id: "9",
+//         name: "Ripple Ice Cream",
+//         image: food_9,
+//         price: 14,
+//         description: "Food provides essential nutrients for overall health and well-being",
+//         category: "Deserts"
+//     }, {
+//         _id: "10",
+//         name: "Fruit Ice Cream",
+//         image: food_10,
+//         price: 22,
+//         description: "Food provides essential nutrients for overall health and well-being",
+//         category: "Deserts"
+//     }, {
+//         _id: "11",
+//         name: "Jar Ice Cream",
+//         image: food_11,
+//         price: 10,
+//         description: "Food provides essential nutrients for overall health and well-being",
+//         category: "Deserts"
+//     }, {
+//         _id: "12",
+//         name: "Vanilla Ice Cream",
+//         image: food_12,
+//         price: 12,
+//         description: "Food provides essential nutrients for overall health and well-being",
+//         category: "Deserts"
+//     },
+//     {
+//         _id: "13",
+//         name: "Chicken Sandwich",
+//         image: food_13,
+//         price: 12,
+//         description: "Food provides essential nutrients for overall health and well-being",
+//         category: "Sandwich"
+//     },
+//     {
+//         _id: "14",
+//         name: "Vegan Sandwich",
+//         image: food_14,
+//         price: 18,
+//         description: "Food provides essential nutrients for overall health and well-being",
+//         category: "Sandwich"
+//     }, {
+//         _id: "15",
+//         name: "Grilled Sandwich",
+//         image: food_15,
+//         price: 16,
+//         description: "Food provides essential nutrients for overall health and well-being",
+//         category: "Sandwich"
+//     }, {
+//         _id: "16",
+//         name: "Bread Sandwich",
+//         image: food_16,
+//         price: 24,
+//         description: "Food provides essential nutrients for overall health and well-being",
+//         category: "Sandwich"
+//     }, {
+//         _id: "17",
+//         name: "Cup Cake",
+//         image: food_17,
+//         price: 14,
+//         description: "Food provides essential nutrients for overall health and well-being",
+//         category: "Cake"
+//     }, {
+//         _id: "18",
+//         name: "Vegan Cake",
+//         image: food_18,
+//         price: 12,
+//         description: "Food provides essential nutrients for overall health and well-being",
+//         category: "Cake"
+//     }, {
+//         _id: "19",
+//         name: "Butterscotch Cake",
+//         image: food_19,
+//         price: 20,
+//         description: "Food provides essential nutrients for overall health and well-being",
+//         category: "Cake"
+//     }, {
+//         _id: "20",
+//         name: "Sliced Cake",
+//         image: food_20,
+//         price: 15,
+//         description: "Food provides essential nutrients for overall health and well-being",
+//         category: "Cake"
+//     }, {
+//         _id: "21",
+//         name: "Garlic Mushroom ",
+//         image: food_21,
+//         price: 14,
+//         description: "Food provides essential nutrients for overall health and well-being",
+//         category: "Pure Veg"
+//     }, {
+//         _id: "22",
+//         name: "Fried Cauliflower",
+//         image: food_22,
+//         price: 22,
+//         description: "Food provides essential nutrients for overall health and well-being",
+//         category: "Pure Veg"
+//     }, {
+//         _id: "23",
+//         name: "Mix Veg Pulao",
+//         image: food_23,
+//         price: 10,
+//         description: "Food provides essential nutrients for overall health and well-being",
+//         category: "Pure Veg"
+//     }, {
+//         _id: "24",
+//         name: "Rice Zucchini",
+//         image: food_24,
+//         price: 12,
+//         description: "Food provides essential nutrients for overall health and well-being",
+//         category: "Pure Veg"
+//     },
+//     {
+//         _id: "25",
+//         name: "Cheese Pasta",
+//         image: food_25,
+//         price: 12,
+//         description: "Food provides essential nutrients for overall health and well-being",
+//         category: "Pasta"
+//     },
+//     {
+//         _id: "26",
+//         name: "Tomato Pasta",
+//         image: food_26,
+//         price: 18,
+//         description: "Food provides essential nutrients for overall health and well-being",
+//         category: "Pasta"
+//     }, {
+//         _id: "27",
+//         name: "Creamy Pasta",
+//         image: food_27,
+//         price: 16,
+//         description: "Food provides essential nutrients for overall health and well-being",
+//         category: "Pasta"
+//     }, {
+//         _id: "28",
+//         name: "Chicken Pasta",
+//         image: food_28,
+//         price: 24,
+//         description: "Food provides essential nutrients for overall health and well-being",
+//         category: "Pasta"
+//     }, {
+//         _id: "29",
+//         name: "Buttter Noodles",
+//         image: food_29,
+//         price: 14,
+//         description: "Food provides essential nutrients for overall health and well-being",
+//         category: "Noodles"
+//     }, {
+//         _id: "30",
+//         name: "Veg Noodles",
+//         image: food_30,
+//         price: 12,
+//         description: "Food provides essential nutrients for overall health and well-being",
+//         category: "Noodles"
+//     }, {
+//         _id: "31",
+//         name: "Somen Noodles",
+//         image: food_31,
+//         price: 20,
+//         description: "Food provides essential nutrients for overall health and well-being",
+//         category: "Noodles"
+//     }, {
+//         _id: "32",
+//         name: "Cooked Noodles",
+//         image: food_32,
+//         price: 15,
+//         description: "Food provides essential nutrients for overall health and well-being",
+//         category: "Noodles"
+//     }
+// ]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// frontend/src/assets/assets.js
+import basket_icon from './basket_icon.png'
+import logo from './logo.png'
+import header_img from './header_img.png'
+import search_icon from './search_icon.png'
+import menu_1 from './menu_1.png'
+import menu_2 from './Menu-2.jpg'
+import menu_3 from './Menu-3.png'
+import menu_4 from './Menu-4.png'
+import menu_5 from './Menu-5.png'
+import menu_6 from './Menu-6.png'
+import menu_7 from './Menu-7.png'
+import menu_8 from './Menu-8.jpg'
+import menu_9 from './Menu-9.jpg'
+import menu_10 from './Menu-10.png'
+import menu_11 from './Menu-11.png'
+import menu_12 from './Menu-12.png'
+
+import food_1 from './Food-1.png'
+import food_2 from './food_2.png'
+import food_3 from './Food-3.png'
+import food_4 from './Food-4.png'
+import food_5 from './food_5.png'
+import food_6 from './Food-6.png'
+import food_7 from './Food-7.jpg'
+import food_8 from './Food-8.jpg'
+import food_9 from './Food-9.png'
+import food_10 from './Food-10.png'
+import food_11 from './Food-11.png'
+import food_12 from './Food-12.png'
+// import food_13 from './food_13.png'
+// import food_14 from './food_14.png'
+import food_15 from './Food-15.png'
+import food_16 from './Food-16.png'
+import food_17 from './Food-17.png'
+import food_18 from './Food-18.png'
+import food_19 from './Food-19.png'
+import food_20 from './Food-20.png'
+import food_21 from './Food-21.png'
+import food_22 from './Food-22.png'
+import food_23 from './Food-23.png'
+import food_24 from './Foo'
+import food_25 from './food_25.png'
+import food_26 from './food_26.png'
+import food_27 from './food_27.png'
+import food_28 from './food_28.png'
+import food_29 from './food_29.png'
+import food_30 from './food_30.png'
+import food_31 from './food_31.png'
+import food_32 from './food_32.png'
+
+import add_icon_white from './add_icon_white.png'
+import add_icon_green from './add_icon_green.png'
+import remove_icon_red from './remove_icon_red.png'
+import app_store from './app_store.png'
+import play_store from './play_store.png'
+import linkedin_icon from './linkedin_icon.png'
+import facebook_icon from './facebook_icon.png'
+import twitter_icon from './twitter_icon.png'
+import cross_icon from './cross_icon.png'
+import selector_icon from './selector_icon.png'
+import rating_starts from './rating_starts.png'
+import profile_icon from './profile_icon.png'
+import bag_icon from './bag_icon.png'
+import logout_icon from './logout_icon.png'
+import parcel_icon from './parcel_icon.png'
+
+export const assets = {
+    logo,
+    basket_icon,
+    header_img,
+    search_icon,
+    rating_starts,
+    add_icon_green,
+    add_icon_white,
+    remove_icon_red,
+    app_store,
+    play_store,
+    linkedin_icon,
+    facebook_icon,
+    twitter_icon,
+    cross_icon,
+    selector_icon,
+    profile_icon,
+    logout_icon,
+    bag_icon,
+    parcel_icon,
+    
+    // Food images mapping
+    food_1,
+    food_2,
+    food_3,
+    food_4,
+    food_5,
+    food_6,
+    food_7,
+    food_8,
+    food_9,
+    food_10,
+    food_11,
+    food_12,
+    // food_13,
+    // food_14,
+    food_15,
+    food_16,
+    food_17,
+    food_18,
+    food_19,
+    food_20,
+    food_21,
+    food_22,
+    food_23,
+    food_24,
+    food_25,
+    food_26,
+    food_27,
+    // food_28,
+    food_29,
+    food_30,
+    food_31,
+    food_32
+}
+
+export const menu_list = [
+    {
+        menu_name: "Salads",
+        menu_image: menu_1
+    },
+    {
+        menu_name: "Biryanis and Rolls",
+        menu_image: menu_2
+    },
+    {
+        menu_name: "Special Dishes",
+        menu_image: menu_3
+    },
+    {
+        menu_name: "Maharashtrian Dishes",
+        menu_image: menu_4
+    },
+    {
+        menu_name: "Veg Dishes and Thalis",
+        menu_image: menu_5
+    },
+    {
+        menu_name: "Non-Veg Dishes and Thalis",
+        menu_image: menu_6
+    },
+    {
+        menu_name: "Veg Starters", // New category
+        menu_image: menu_7 // Using existing icon
+    },
+     {
+        menu_name: "Non-Veg Starters", // New category
+        menu_image: menu_8 // Using existing icon
+    },
+    {
+        menu_name: "Pasta",
+        menu_image: menu_9
+    },
+       {
+        menu_name: "Paneer Dishes",
+        menu_image: menu_10
+    },
+    {
+        menu_name: "Chinese",
+        menu_image: menu_11
+    },
+    {
+        menu_name: "Hot and Cold Beverages", // New category
+        menu_image: menu_12 // Using existing icon
+    }
+]
+
+// Helper function to get the actual image from assets
+const getFoodImage = (imageName) => {
+    return assets[imageName] || '';
+}
+
+export const food_list = [
+    {
+        _id: "1",
+        name: "Green salad",
+        image: getFoodImage("food_1"), // Use the actual imported image
+        price:30,
+        description: "Food provides essential nutrients for overall health and well-being",
+        category: "Salads"
+    },
+    // {
+    //     _id: "2",
+    //     name: "Tomato salad",
+    //     image: getFoodImage("food_2"),
+    //     price: 20,
+    //     description: "Food provides essential nutrients for overall health and well-being",
+    //     category: "Salads"
+    // },
+    {
+        _id: "3",
+        name: "Tomato Salad",
+        image: getFoodImage("food_3"),
+        price: 20,
+        description: "Food provides essential nutrients for overall health and well-being",
+        category: "Salads"
+    },
+    {
+        _id: "4",
+        name: "Masala Papad",
+        image: getFoodImage("food_4"),
+        price: 20,
+        description: "Food provides essential nutrients for overall health and well-being",
+        category: "Salads"
+    },
+    {
+        _id: "5",
+        name: "Lasagna Rolls",
+        image: getFoodImage("food_5"),
+        price: 14,
+        description: "Food provides essential nutrients for overall health and well-being",
+        category: "Rolls"
+    },
+    {
+        _id: "6",
+        name: "Egg Biryani",
+        image: getFoodImage("food_6"),
+        price: 120,
+        description: "Food provides essential nutrients for overall health and well-being",
+        category: "Biryanis and Rolls"
+    },
+    {
+        _id: "7",
+        name: "Chicken Biryani",
+        image: getFoodImage("food_7"),
+        price: 150,
+        description: "Food provides essential nutrients for overall health and well-being",
+        category: "Biryanis and Rolls"
+    },
+    {
+        _id: "8",
+        name: "Mutton Biryani",
+        image: getFoodImage("food_8"),
+        price: 199,
+        description: "Food provides essential nutrients for overall health and well-being",
+        category: "Biryanis and Rolls"
+    },
+    {
+        _id: "9",
+        name: "Special Chicken Thali",
+        image: getFoodImage("food_9"),
+        price: 180,
+        description: "Food provides essential nutrients for overall health and well-being",
+        category: "Special Dishes"
+    },
+    {
+        _id: "10",
+        name: "Panner Makahanwala",
+        image: getFoodImage("food_10"),
+        price: 160,
+        description: "Food provides essential nutrients for overall health and well-being",
+        category: "Special Dishes"
+    },
+    {
+        _id: "11",
+        name: "Chicken Butter Masala",
+        image: getFoodImage("food_11"),
+        price: ['280','/','400'],
+        description: "Food provides essential nutrients for overall health and well-being",
+        category: "Special Dishes"
+    },
+    {
+        _id: "12",
+        name: "Kaju kari",
+        image: getFoodImage("food_12"),
+        price: 160,
+        description: "Food provides essential nutrients for overall health and well-being",
+        category: "Special Dishes"
+    },
+    // {
+    //     _id: "13",
+    //     name: "Chicken Sandwich",
+    //     image: getFoodImage("food_13"),
+    //     price: 12,
+    //     description: "Food provides essential nutrients for overall health and well-being",
+    //     category: "Sandwich"
+    // },
+    // {
+    //     _id: "14",
+    //     name: "Vegan Sandwich",
+    //     image: getFoodImage("food_14"),
+    //     price: 18,
+    //     description: "Food provides essential nutrients for overall health and well-being",
+    //     category: "Maharashtrian Dishes"
+    // },
+    {
+        _id: "15",
+        name: "Bharali Vangi",
+        image: getFoodImage("food_15"),
+        price: 110,
+        description: "Food provides essential nutrients for overall health and well-being",
+        category: "Maharashtrian Dishes"
+    },
+    {
+        _id: "16",
+        name: "Pitala Bhakari",
+        image: getFoodImage("food_16"),
+        price: 99,
+        description: "Food provides essential nutrients for overall health and well-being",
+        category: "Maharashtrian Dishes"
+    },
+    {
+        _id: "17",
+        name: "Baigan Bharta",
+        image: getFoodImage("food_17"),
+        price: 110,
+        description: "Food provides essential nutrients for overall health and well-being",
+        category: "Maharashtrian Dishes"
+    },
+    {
+        _id: "18",
+        name: "Veg Kolhapuri",
+        image: getFoodImage("food_18"),
+        price: 140,
+        description: "Food provides essential nutrients for overall health and well-being",
+        category: "Veg Dishes and Thalis"
+    },
+    {
+        _id: "19",
+        name: "Veg Bhuna",
+        image: getFoodImage("food_19"),
+        price: 140,
+        description: "Food provides essential nutrients for overall health and well-being",
+        category: "Veg Dishes and Thalis"
+    },
+    {
+        _id: "20",
+        name: "Malai Kofta",
+        image: getFoodImage("food_20"),
+        price: 170,
+        description: "Food provides essential nutrients for overall health and well-being",
+        category: "Veg Dishes and Thalis"
+    },
+    {
+        _id: "21",
+        name: "Mutton Malwani",
+        image: getFoodImage("food_21"),
+        price: ['299','/','550'],
+        description: "Food provides essential nutrients for overall health and well-being",
+        category: "Non-Veg Dishes and Thalis"
+    },
+    {
+        _id: "22",
+        name: "Chicken Tikka Masala",
+        image: getFoodImage("food_22"),
+        price: 190,
+        description: "Food provides essential nutrients for overall health and well-being",
+        category: "Non-Veg Dishes and Thalis"
+    },
+    {
+        _id: "23",
+        name: "Chicken Handi",
+        image: getFoodImage("food_23"),
+        price: ['260','/','400'],
+        description: "Food provides essential nutrients for overall health and well-being",
+        category: "Non-Veg Dishes and Thalis"
+    },
+    {
+        _id: "24",
+        name: "veg Manchurian",
+        image: getFoodImage("food_24"),
+        price: 12,
+        description: "Food provides essential nutrients for overall health and well-being",
+        category: "Veg Starters"
+    },
+    {
+        _id: "25",
+        name: "Panner Chilli",
+        image: getFoodImage("food_25"),
+        price: 12,
+        description: "Food provides essential nutrients for overall health and well-being",
+        category: "Veg Starters"
+    },
+    {
+        _id: "26",
+        name: "",
+        image: getFoodImage("food_26"),
+        price: 18,
+        description: "Food provides essential nutrients for overall health and well-being",
+        category: "Veg Starters"
+    },
+    {
+        _id: "27",
+        name: "Creamy Pasta",
+        image: getFoodImage("food_27"),
+        price: 16,
+        description: "Food provides essential nutrients for overall health and well-being",
+        category: "Pasta"
+    },
+    // {
+    //     _id: "28",
+    //     name: "Chicken Pasta",
+    //     image: getFoodImage("food_28"),
+    //     price: 24,
+    //     description: "Food provides essential nutrients for overall health and well-being",
+    //     category: "Pasta"
+    // },
+    {
+        _id: "29",
+        name: "Butter Noodles",
+        image: getFoodImage("food_29"),
+        price: 14,
+        description: "Food provides essential nutrients for overall health and well-being",
+        category: "Noodles"
+    },
+    {
+        _id: "30",
+        name: "Veg Noodles",
+        image: getFoodImage("food_30"),
+        price: 12,
+        description: "Food provides essential nutrients for overall health and well-being",
+        category: "Noodles"
+    },
+    {
+        _id: "31",
+        name: "Somen Noodles",
+        image: getFoodImage("food_31"),
+        price: 20,
+        description: "Food provides essential nutrients for overall health and well-being",
+        category: "Noodles"
+    },
+    {
+        _id: "32",
+        name: "Cooked Noodles",
+        image: getFoodImage("food_32"),
+        price: 15,
+        description: "Food provides essential nutrients for overall health and well-being",
+        category: "Noodles"
+    }
+]
