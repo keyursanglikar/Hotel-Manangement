@@ -1,12 +1,12 @@
 {
-  "name": "food-ordering-admin",
+  "name": "food-ordering-frontend",
   "private": true,
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --port 5173", 
+    "dev": "vite --port 5174",  // Frontend dev on 5174
     "build": "vite build",
-    "preview": "vite preview --port 5173",
+    "preview": "vite preview --port 5174",
     "deploy": "vercel --prod"
   },
   "dependencies": {
