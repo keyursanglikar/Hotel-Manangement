@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: food-ordering-backend
+    env: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: PORT
+        value: 4000
+      - key: CORS_ORIGIN
+        value: https://hotel-manangement.vercel.app/,https://your-admin.vercel.app

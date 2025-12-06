@@ -1584,186 +1584,493 @@
 // };
 
 
+
 // frontend/src/assets/assets.js
 
-// =================== ENVIRONMENT CONFIG ===================
-const isProduction = import.meta.env.PROD;
-const isDevelopment = !isProduction;
+// Use relative paths for production
+const isProduction = process.env.NODE_ENV === 'production';
+const API_BASE_URL = isProduction 
+  ? window.location.origin // Use current origin in production
+  : (import.meta.env.VITE_API_BASE_URL || "http://localhost:4000");
 
-// Use environment variables or defaults
-const DEV_API_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:4000";
-const PROD_API_URL = import.meta.env.VITE_PRODUCTION_API_BASE_URL || "https://your-backend.onrender.com";
-const API_BASE_URL = isProduction ? PROD_API_URL : DEV_API_URL;
+console.log("API Base URL:", API_BASE_URL, "Is Production:", isProduction);
 
-console.log("Environment:", {
-  isProduction,
-  isDevelopment,
-  API_BASE_URL,
-  hostname: typeof window !== 'undefined' ? window.location.hostname : 'server',
-  origin: typeof window !== 'undefined' ? window.location.origin : 'server'
-});
-
-// =================== HELPER FUNCTIONS ===================
 /**
- * Check if image is from backend (uploads) or public folder
+ * Determine if an image is from backend/uploads or public/images
  */
 const isBackendImage = (imagePath) => {
-  if (!imagePath || typeof imagePath !== 'string') return false;
+  if (!imagePath) return false;
   
-  // Already a full URL
+  // Backend images usually:
+  // 1. Come from database with relative paths like "food-images/image.jpg"
+  // 2. Don't start with /images/
+  // 3. Might contain "uploads" or date-based folders
+  
+  const lowerPath = imagePath.toLowerCase();
+  
+  // If it already has http:// or https://, check if it's from our backend
   if (imagePath.startsWith('http')) {
     return imagePath.includes('/uploads/');
   }
   
-  // Backend images usually have paths like:
-  // - "uploads/filename.jpg"
-  // - "food-images/filename.png"
-  // - Date-based paths like "2024/01/filename.jpg"
+  // If it starts with /images/, it's public
+  if (imagePath.startsWith('/images/')) {
+    return false;
+  }
   
-  // Check for backend indicators
-  const lowerPath = imagePath.toLowerCase();
-  const isUpload = lowerPath.includes('upload') || 
-                   lowerPath.includes('food-image') ||
-                   (lowerPath.includes('/') && !lowerPath.startsWith('/images/'));
+  // If it's a simple filename without path, it's public
+  if (!imagePath.includes('/') && (imagePath.includes('.png') || imagePath.includes('.jpg') || imagePath.includes('.jpeg'))) {
+    return false;
+  }
   
-  return isUpload;
+  // Default to backend if it has a complex path
+  return imagePath.includes('/');
 };
 
 /**
- * Get complete image URL
+ * Get image URL with automatic detection
  */
 export const getImageURL = (imagePath) => {
-  // Return placeholder if no image
-  if (!imagePath) return "/images/placeholder.jpg";
+  if (!imagePath || imagePath.trim() === '') {
+    return "/images/placeholder.jpg";
+  }
   
   // If it's already a full URL, return as is
-  if (typeof imagePath === 'string' && (
-    imagePath.startsWith('http') || 
-    imagePath.startsWith('data:') ||
-    imagePath.startsWith('blob:')
-  )) {
+  if (imagePath.startsWith('http')) {
     return imagePath;
   }
   
-  // Convert to string if needed
-  const pathStr = typeof imagePath === 'string' ? imagePath : String(imagePath);
-  
-  // If it's a backend image (from uploads)
-  if (isBackendImage(pathStr)) {
-    const filename = pathStr.split('/').pop();
-    // Clean URL to avoid double slashes
-    const cleanBaseUrl = API_BASE_URL.replace(/\/$/, '');
-    return `${cleanBaseUrl}/uploads/${filename}`;
+  // Check if this is a backend image
+  if (isBackendImage(imagePath)) {
+    // It's a backend image - get from uploads
+    const fileName = imagePath.split('/').pop();
+    // Ensure no double slashes
+    const uploadsPath = `${API_BASE_URL.replace(/\/$/, '')}/uploads/${fileName}`;
+    return uploadsPath;
   }
   
-  // If it starts with /images/, return as is (public image)
-  if (pathStr.startsWith('/images/')) {
-    return pathStr;
+  // It's a public image
+  // If it already starts with /images/, return as is
+  if (imagePath.startsWith('/images/')) {
+    return imagePath;
   }
   
-  // If it's just a filename (without path), prepend /images/
-  if (!pathStr.includes('/') && pathStr.includes('.')) {
-    return `/images/${pathStr}`;
+  // If it's just a filename, add /images/ prefix
+  if (!imagePath.includes('/') && (imagePath.includes('.') || imagePath.includes('food_'))) {
+    return `/images/${imagePath}`;
   }
   
-  // Default to public images folder
-  return `/images/${pathStr}`;
+  // Default case - treat as public image with /images/ prefix
+  const fileName = imagePath.split('/').pop();
+  return `/images/${fileName}`;
 };
 
 /**
- * Smart image getter for food items
+ * Simplified function for static assets
  */
-export const getFoodImage = (imageKey) => {
-  if (!imageKey) return "/images/placeholder.jpg";
+export const getAsset = (filename) => {
+  return `/images/${filename}`;
+};
+
+// -----------------------
+// Assets Object - All hardcoded images
+// -----------------------
+export const assets = {
+  // Main icons and images
+  logo: getAsset("logo.png"),
+  basket_icon: getAsset("basket_icon.png"),
+  header_img: getAsset("header_img.png"),
+  search_icon: getAsset("search_icon.png"),
+  rating_stars: getAsset("rating_starts.png"),
+  add_icon_green: getAsset("add_icon_green.png"),
+  add_icon_white: getAsset("add_icon_white.png"),
+  remove_icon_red: getAsset("remove_icon_red.png"),
+  app_store: getAsset("app_store.png"),
+  play_store: getAsset("play_store.png"),
+  linkedin_icon: getAsset("linkedin_icon.png"),
+  facebook_icon: getAsset("facebook_icon.png"),
+  twitter_icon: getAsset("twitter_icon.png"),
+  cross_icon: getAsset("cross_icon.png"),
+  selector_icon: getAsset("selector_icon.png"),
+  profile_icon: getAsset("profile_icon.png"),
+  logout_icon: getAsset("logout_icon.png"),
+  bag_icon: getAsset("bag_icon.png"),
+  parcel_icon: getAsset("parcel_icon.png"),
   
-  // If imageKey is an asset reference (like 'food_1')
-  if (typeof imageKey === 'string' && assets[imageKey]) {
+  // Menu category images
+  menu_1: getAsset("menu_1.png"),
+  menu_2: getAsset("Menu-2.jpg"),
+  menu_3: getAsset("Menu-3.png"),
+  menu_4: getAsset("Menu-4.png"),
+  menu_5: getAsset("Menu-5.png"),
+  menu_6: getAsset("Menu-6.png"),
+  menu_7: getAsset("Menu-7.png"),
+  menu_8: getAsset("Menu-8.jpg"),
+  menu_9: getAsset("Menu-9.jpg"),
+  menu_10: getAsset("Menu-10.png"),
+  menu_11: getAsset("Menu-11.png"),
+  menu_12: getAsset("Menu-12.png"),
+  
+  // Food images - ALL as public images
+  food_1: getAsset("Food-1.png"),
+  food_2: getAsset("food_2.png"),
+  food_3: getAsset("Food-3.png"),
+  food_4: getAsset("Food-4.png"),
+  food_5: getAsset("food_5.png"),
+  food_6: getAsset("Food-6.png"),
+  food_7: getAsset("Food-7.jpg"),
+  food_8: getAsset("Food-8.jpg"),
+  food_9: getAsset("Food-9.png"),
+  food_10: getAsset("Food-10.png"),
+  food_11: getAsset("Food-11.png"),
+  food_12: getAsset("Food-12.png"),
+  food_13: getAsset("Food-13.png"),
+  food_14: getAsset("Food-14.png"),
+  food_15: getAsset("Food-15.png"),
+  food_16: getAsset("Food-16.png"),
+  food_17: getAsset("Food-17.png"),
+  food_18: getAsset("Food-18.png"),
+  food_19: getAsset("Food-19.png"),
+  food_20: getAsset("Food-20.png"),
+  food_21: getAsset("Food-21.png"),
+  food_22: getAsset("Food-22.png"),
+  food_23: getAsset("Food-23.png"),
+  food_24: getAsset("Food-24.jpg"),
+  food_25: getAsset("Food-25.png"),
+  food_26: getAsset("Food-26.png"),
+  food_27: getAsset("Food-27.png"),
+  food_28: getAsset("Food-28.png"),
+  food_29: getAsset("Food-29.png"),
+  food_30: getAsset("food_30.png"),
+  food_31: getAsset("food_31.png"),
+  food_32: getAsset("food_32.png"),
+  food_33: getAsset("Food-33.png"),
+  food_34: getAsset("Food-34.png"),
+  food_35: getAsset("Food-35.png"),
+  food_36: getAsset("Food-36.png"),
+  food_37: getAsset("Food-37.png"),
+  placeholder: getAsset("placeholder.jpg"),
+};
+
+// -----------------------
+// Get food image - SIMPLIFIED VERSION
+// -----------------------
+export const getFoodImage = (imageKey) => {
+  if (!imageKey) return assets.placeholder;
+  
+  // If imageKey is a direct reference to assets object
+  if (assets[imageKey]) {
     return assets[imageKey];
   }
   
-  // Otherwise use getImageURL
+  // Use getImageURL which auto-detects backend vs public
   return getImageURL(imageKey);
 };
 
-// =================== ASSETS DEFINITION ===================
-export const assets = {
-  // Main icons and images
-  logo: "/images/logo.png",
-  basket_icon: "/images/basket_icon.png",
-  header_img: "/images/header_img.png",
-  search_icon: "/images/search_icon.png",
-  rating_starts: "/images/rating_starts.png",
-  add_icon_green: "/images/add_icon_green.png",
-  add_icon_white: "/images/add_icon_white.png",
-  remove_icon_red: "/images/remove_icon_red.png",
-  app_store: "/images/app_store.png",
-  play_store: "/images/play_store.png",
-  linkedin_icon: "/images/linkedin_icon.png",
-  facebook_icon: "/images/facebook_icon.png",
-  twitter_icon: "/images/twitter_icon.png",
-  cross_icon: "/images/cross_icon.png",
-  selector_icon: "/images/selector_icon.png",
-  profile_icon: "/images/profile_icon.png",
-  logout_icon: "/images/logout_icon.png",
-  bag_icon: "/images/bag_icon.png",
-  parcel_icon: "/images/parcel_icon.png",
-  
-  // Menu category images
-  menu_1: "/images/menu_1.png",
-  menu_2: "/images/Menu-2.jpg",
-  menu_3: "/images/Menu-3.png",
-  menu_4: "/images/Menu-4.png",
-  menu_5: "/images/Menu-5.png",
-  menu_6: "/images/Menu-6.png",
-  menu_7: "/images/Menu-7.png",
-  menu_8: "/images/Menu-8.jpg",
-  menu_9: "/images/Menu-9.jpg",
-  menu_10: "/images/Menu-10.png",
-  menu_11: "/images/Menu-11.png",
-  menu_12: "/images/Menu-12.png",
-  
-  // Food images - ALL AS DIRECT PATHS
-  food_1: "/images/Food-1.png",
-  food_2: "/images/food_2.png",
-  food_3: "/images/Food-3.png",
-  food_4: "/images/Food-4.png",
-  food_5: "/images/food_5.png",
-  food_6: "/images/Food-6.png",
-  food_7: "/images/Food-7.jpg",
-  food_8: "/images/Food-8.jpg",
-  food_9: "/images/Food-9.png",
-  food_10: "/images/Food-10.png",
-  food_11: "/images/Food-11.png",
-  food_12: "/images/Food-12.png",
-  food_13: "/images/Food-13.png",
-  food_14: "/images/Food-14.png",
-  food_15: "/images/Food-15.png",
-  food_16: "/images/Food-16.png",
-  food_17: "/images/Food-17.png",
-  food_18: "/images/Food-18.png",
-  food_19: "/images/Food-19.png",
-  food_20: "/images/Food-20.png",
-  food_21: "/images/Food-21.png",
-  food_22: "/images/Food-22.png",
-  food_23: "/images/Food-23.png",
-  food_24: "/images/Food-24.jpg",
-  food_25: "/images/Food-25.png",
-  food_26: "/images/Food-26.png",
-  food_27: "/images/Food-27.png",
-  food_28: "/images/Food-28.png",
-  food_29: "/images/Food-29.png",
-  food_30: "/images/food_30.png",
-  food_31: "/images/food_31.png",
-  food_32: "/images/food_32.png",
-  food_33: "/images/Food-33.png",
-  food_34: "/images/Food-34.png",
-  food_35: "/images/Food-35.png",
-  food_36: "/images/Food-36.png",
-  food_37: "/images/Food-37.png",
-  placeholder: "/images/placeholder.jpg",
-};
+// -----------------------
+// Complete Food List - Using direct asset references
+// -----------------------
+export const food_list = [
+  // Salads
+  { 
+    _id: "1", 
+    name: "Green Salad", 
+    image: assets.food_1, 
+    price: 30, 
+    description: "Fresh green salad with mixed vegetables and dressing", 
+    category: "Salads" 
+  },
+  { 
+    _id: "2", 
+    name: "Tomato Salad", 
+    image: assets.food_3, 
+    price: 20, 
+    description: "Fresh tomatoes with herbs and light dressing", 
+    category: "Salads" 
+  },
+  { 
+    _id: "3", 
+    name: "Masala Papad", 
+    image: assets.food_4, 
+    price: 20, 
+    description: "Crispy papad topped with spicy masala", 
+    category: "Salads" 
+  },
 
-// =================== MENU LIST ===================
+  // Biryanis and Rolls
+  { 
+    _id: "4", 
+    name: "Chicken Rolls", 
+    image: assets.food_5, 
+    price: 140, 
+    description: "Italian style lasagna rolls with cheese filling", 
+    category: "Biryanis and Rolls" 
+  },
+  { 
+    _id: "5", 
+    name: "Egg Biryani", 
+    image: assets.food_6, 
+    price: 120, 
+    description: "Fragrant basmati rice with boiled eggs and spices", 
+    category: "Biryanis and Rolls" 
+  },
+  { 
+    _id: "6", 
+    name: "Chicken Biryani", 
+    image: assets.food_7, 
+    price: 150, 
+    description: "Traditional chicken biryani with aromatic spices", 
+    category: "Biryanis and Rolls" 
+  },
+  { 
+    _id: "7", 
+    name: "Mutton Biryani", 
+    image: assets.food_8, 
+    price: 199, 
+    description: "Rich mutton biryani with tender meat pieces", 
+    category: "Biryanis and Rolls" 
+  },
+
+  // Special Dishes
+  { 
+    _id: "8", 
+    name: "Special Chicken Thali", 
+    image: assets.food_9, 
+    price: 180, 
+    description: "Complete meal with chicken curry, rice, bread, and sides", 
+    category: "Special Dishes" 
+  },
+  { 
+    _id: "9", 
+    name: "Paneer Makhaniwala", 
+    image: assets.food_10, 
+    price: 160, 
+    description: "Paneer cubes in rich tomato and butter gravy", 
+    category: "Special Dishes" 
+  },
+  { 
+    _id: "10", 
+    name: "Chicken Butter Masala", 
+    image: assets.food_11, 
+    price: ['280', '/', '400'], 
+    description: "Creamy butter chicken in rich gravy", 
+    category: "Special Dishes" 
+  },
+  { 
+    _id: "11", 
+    name: "Kaju Kari", 
+    image: assets.food_12, 
+    price: 160, 
+    description: "Cashew nuts in rich creamy gravy", 
+    category: "Special Dishes" 
+  },
+
+  // Maharashtrian Dishes
+  { 
+    _id: "12", 
+    name: "Bharali Vangi", 
+    image: assets.food_15, 
+    price: 110, 
+    description: "Stuffed brinjals with Maharashtrian spices", 
+    category: "Maharashtrian Dishes" 
+  },
+  { 
+    _id: "13", 
+    name: "Pithla Bhakri", 
+    image: assets.food_16, 
+    price: 99, 
+    description: "Traditional Maharashtrian chickpea flour curry with jowar bread", 
+    category: "Maharashtrian Dishes" 
+  },
+  { 
+    _id: "14", 
+    name: "Baigan Bharta", 
+    image: assets.food_17, 
+    price: 110, 
+    description: "Smoked eggplant mash with spices", 
+    category: "Maharashtrian Dishes" 
+  },
+
+  // Veg Dishes and Thalis
+  { 
+    _id: "15", 
+    name: "Veg Kolhapuri", 
+    image: assets.food_18, 
+    price: 140, 
+    description: "Spicy mixed vegetable curry from Kolhapur", 
+    category: "Veg Dishes and Thalis" 
+  },
+  { 
+    _id: "16", 
+    name: "Veg Bhuna", 
+    image: assets.food_19, 
+    price: 140, 
+    description: "Slow-cooked vegetables in thick gravy", 
+    category: "Veg Dishes and Thalis" 
+  },
+  { 
+    _id: "17", 
+    name: "Malai Kofta", 
+    image: assets.food_20, 
+    price: 170, 
+    description: "Creamy vegetable dumplings in rich gravy", 
+    category: "Veg Dishes and Thalis" 
+  },
+
+  // Non-Veg Dishes and Thalis
+  { 
+    _id: "18", 
+    name: "Mutton Malwani", 
+    image: assets.food_21, 
+    price: ['299','/','550'], 
+    description: "Spicy coastal style mutton curry", 
+    category: "Non-Veg Dishes and Thalis" 
+  },
+  { 
+    _id: "19", 
+    name: "Chicken Tikka Masala", 
+    image: assets.food_22, 
+    price: 190, 
+    description: "Tandoori chicken pieces in creamy masala", 
+    category: "Non-Veg Dishes and Thalis" 
+  },
+  { 
+    _id: "20", 
+    name: "Chicken Handi", 
+    image: assets.food_23, 
+    price: ['260','/','400'], 
+    description: "Chicken cooked in traditional handi with spices", 
+    category: "Non-Veg Dishes and Thalis" 
+  },
+
+  // Veg Starters
+  { 
+    _id: "21", 
+    name: "Veg Manchurian", 
+    image: assets.food_24, 
+    price: 140, 
+    description: "Fried vegetable balls in tangy sauce", 
+    category: "Veg Starters" 
+  },
+  { 
+    _id: "22", 
+    name: "Paneer Chilli", 
+    image: assets.food_25, 
+    price: 150, 
+    description: "Crispy paneer cubes in spicy chilli sauce", 
+    category: "Veg Starters" 
+  },
+  { 
+    _id: "23", 
+    name: "Veg Crispy", 
+    image: assets.food_26, 
+    price: 150, 
+    description: "Crispy fried vegetable fritters", 
+    category: "Veg Starters" 
+  },
+
+  // Non-Veg Starters
+  { 
+    _id: "24", 
+    name: "Chicken 65", 
+    image: assets.food_27, 
+    price: 160, 
+    description: "Spicy deep-fried chicken bites", 
+    category: "Non-Veg Starters" 
+  },
+  { 
+    _id: "25", 
+    name: "Chicken Lollipop", 
+    image: assets.food_28, 
+    price: 160, 
+    description: "Chicken wings shaped like lollipops", 
+    category: "Non-Veg Starters" 
+  },
+  { 
+    _id: "26", 
+    name: "Chicken Tandoori", 
+    image: assets.food_29, 
+    price: ['199','/','350'], 
+    description: "Marinated chicken cooked in tandoor", 
+    category: "Non-Veg Starters" 
+  },
+
+  // Pasta
+  { 
+    _id: "27", 
+    name: "Chicken Pasta", 
+    image: assets.food_30, 
+    price: 240, 
+    description: "Pasta with chicken in creamy sauce", 
+    category: "Pasta" 
+  },
+  { 
+    _id: "28", 
+    name: "Veg Pasta", 
+    image: assets.food_31, 
+    price: 200, 
+    description: "Pasta with mixed vegetables in tomato sauce", 
+    category: "Pasta" 
+  },
+  { 
+    _id: "29", 
+    name: "Creamy Pasta", 
+    image: assets.food_32, 
+    price: 220, 
+    description: "White sauce pasta with cheese", 
+    category: "Pasta" 
+  },
+
+  // Paneer Dishes
+  { 
+    _id: "30", 
+    name: "Butter Paneer", 
+    image: assets.food_33, 
+    price: 180, 
+    description: "Paneer cubes in rich butter gravy", 
+    category: "Paneer Dishes" 
+  },
+  { 
+    _id: "31", 
+    name: "Paneer Tikka", 
+    image: assets.food_34, 
+    price: 160, 
+    description: "Marinated paneer cubes grilled in tandoor", 
+    category: "Paneer Dishes" 
+  },
+
+  // Chinese
+  { 
+    _id: "32", 
+    name: "Chilli Paneer", 
+    image: assets.food_35, 
+    price: 170, 
+    description: "Spicy Chinese style paneer with peppers", 
+    category: "Chinese" 
+  },
+
+  // Hot and Cold Beverages
+  { 
+    _id: "33", 
+    name: "Hot Coffee", 
+    image: assets.food_36, 
+    price: 20, 
+    description: "Freshly brewed hot coffee", 
+    category: "Hot and Cold Beverages" 
+  },
+  { 
+    _id: "34", 
+    name: "Iced Tea", 
+    image: assets.food_37, 
+    price: 15, 
+    description: "Refreshing iced tea with lemon", 
+    category: "Hot and Cold Beverages" 
+  },
+];
+
+// -----------------------
+// Menu list
+// -----------------------
 export const menu_list = [
   { menu_name: "Salads", menu_image: assets.menu_1 },
   { menu_name: "Biryanis and Rolls", menu_image: assets.menu_2 },
@@ -1779,68 +2086,9 @@ export const menu_list = [
   { menu_name: "Hot and Cold Beverages", menu_image: assets.menu_12 },
 ];
 
-// =================== FOOD LIST ===================
-export const food_list = [
-  // Salads
-  { _id: "1", name: "Green Salad", image: "Food-1.png", price: 30, description: "Fresh green salad with mixed vegetables and dressing", category: "Salads" },
-  { _id: "2", name: "Tomato Salad", image: "Food-3.png", price: 20, description: "Fresh tomatoes with herbs and light dressing", category: "Salads" },
-  { _id: "3", name: "Masala Papad", image: "Food-4.png", price: 20, description: "Crispy papad topped with spicy masala", category: "Salads" },
-  
-  // Biryanis and Rolls
-  { _id: "4", name: "Chicken Rolls", image: "food_5.png", price: 140, description: "Italian style lasagna rolls with cheese filling", category: "Biryanis and Rolls" },
-  { _id: "5", name: "Egg Biryani", image: "Food-6.png", price: 120, description: "Fragrant basmati rice with boiled eggs and spices", category: "Biryanis and Rolls" },
-  { _id: "6", name: "Chicken Biryani", image: "Food-7.jpg", price: 150, description: "Traditional chicken biryani with aromatic spices", category: "Biryanis and Rolls" },
-  { _id: "7", name: "Mutton Biryani", image: "Food-8.jpg", price: 199, description: "Rich mutton biryani with tender meat pieces", category: "Biryanis and Rolls" },
-  
-  // Special Dishes
-  { _id: "8", name: "Special Chicken Thali", image: "Food-9.png", price: 180, description: "Complete meal with chicken curry, rice, bread, and sides", category: "Special Dishes" },
-  { _id: "9", name: "Paneer Makhaniwala", image: "Food-10.png", price: 160, description: "Paneer cubes in rich tomato and butter gravy", category: "Special Dishes" },
-  { _id: "10", name: "Chicken Butter Masala", image: "Food-11.png", price: ['280', '/', '400'], description: "Creamy butter chicken in rich gravy", category: "Special Dishes" },
-  { _id: "11", name: "Kaju Kari", image: "Food-12.png", price: 160, description: "Cashew nuts in rich creamy gravy", category: "Special Dishes" },
-  
-  // Maharashtrian Dishes
-  { _id: "12", name: "Bharali Vangi", image: "Food-15.png", price: 110, description: "Stuffed brinjals with Maharashtrian spices", category: "Maharashtrian Dishes" },
-  { _id: "13", name: "Pithla Bhakri", image: "Food-16.png", price: 99, description: "Traditional Maharashtrian chickpea flour curry with jowar bread", category: "Maharashtrian Dishes" },
-  { _id: "14", name: "Baigan Bharta", image: "Food-17.png", price: 110, description: "Smoked eggplant mash with spices", category: "Maharashtrian Dishes" },
-  
-  // Veg Dishes and Thalis
-  { _id: "15", name: "Veg Kolhapuri", image: "Food-18.png", price: 140, description: "Spicy mixed vegetable curry from Kolhapur", category: "Veg Dishes and Thalis" },
-  { _id: "16", name: "Veg Bhuna", image: "Food-19.png", price: 140, description: "Slow-cooked vegetables in thick gravy", category: "Veg Dishes and Thalis" },
-  { _id: "17", name: "Malai Kofta", image: "Food-20.png", price: 170, description: "Creamy vegetable dumplings in rich gravy", category: "Veg Dishes and Thalis" },
-  
-  // Non-Veg Dishes and Thalis
-  { _id: "18", name: "Mutton Malwani", image: "Food-21.png", price: ['299','/','550'], description: "Spicy coastal style mutton curry", category: "Non-Veg Dishes and Thalis" },
-  { _id: "19", name: "Chicken Tikka Masala", image: "Food-22.png", price: 190, description: "Tandoori chicken pieces in creamy masala", category: "Non-Veg Dishes and Thalis" },
-  { _id: "20", name: "Chicken Handi", image: "Food-23.png", price: ['260','/','400'], description: "Chicken cooked in traditional handi with spices", category: "Non-Veg Dishes and Thalis" },
-  
-  // Veg Starters
-  { _id: "21", name: "Veg Manchurian", image: "Food-24.jpg", price: 140, description: "Fried vegetable balls in tangy sauce", category: "Veg Starters" },
-  { _id: "22", name: "Paneer Chilli", image: "Food-25.png", price: 150, description: "Crispy paneer cubes in spicy chilli sauce", category: "Veg Starters" },
-  { _id: "23", name: "Veg Crispy", image: "Food-26.png", price: 150, description: "Crispy fried vegetable fritters", category: "Veg Starters" },
-  
-  // Non-Veg Starters
-  { _id: "24", name: "Chicken 65", image: "Food-27.png", price: 160, description: "Spicy deep-fried chicken bites", category: "Non-Veg Starters" },
-  { _id: "25", name: "Chicken Lollipop", image: "Food-28.png", price: 160, description: "Chicken wings shaped like lollipops", category: "Non-Veg Starters" },
-  { _id: "26", name: "Chicken Tandoori", image: "Food-29.png", price: ['199','/','350'], description: "Marinated chicken cooked in tandoor", category: "Non-Veg Starters" },
-  
-  // Pasta
-  { _id: "27", name: "Chicken Pasta", image: "food_30.png", price: 240, description: "Pasta with chicken in creamy sauce", category: "Pasta" },
-  { _id: "28", name: "Veg Pasta", image: "food_31.png", price: 200, description: "Pasta with mixed vegetables in tomato sauce", category: "Pasta" },
-  { _id: "29", name: "Creamy Pasta", image: "food_32.png", price: 220, description: "White sauce pasta with cheese", category: "Pasta" },
-  
-  // Paneer Dishes
-  { _id: "30", name: "Butter Paneer", image: "Food-33.png", price: 180, description: "Paneer cubes in rich butter gravy", category: "Paneer Dishes" },
-  { _id: "31", name: "Paneer Tikka", image: "Food-34.png", price: 160, description: "Marinated paneer cubes grilled in tandoor", category: "Paneer Dishes" },
-  
-  // Chinese
-  { _id: "32", name: "Chilli Paneer", image: "Food-35.png", price: 170, description: "Spicy Chinese style paneer with peppers", category: "Chinese" },
-  
-  // Hot and Cold Beverages
-  { _id: "33", name: "Hot Coffee", image: "Food-36.png", price: 20, description: "Freshly brewed hot coffee", category: "Hot and Cold Beverages" },
-  { _id: "34", name: "Iced Tea", image: "Food-37.png", price: 15, description: "Refreshing iced tea with lemon", category: "Hot and Cold Beverages" },
-];
-
-// =================== HELPER FUNCTIONS ===================
+// -----------------------
+// Helper functions
+// -----------------------
 export const getCategoryItems = (categoryName) => 
   food_list.filter(item => item.category === categoryName);
 
@@ -1850,13 +2098,16 @@ export const getItemById = (id) =>
 export const getAllCategories = () => 
   [...new Set(food_list.map(item => item.category))];
 
-// =================== DEFAULT EXPORT ===================
+// -----------------------
+// Default export
+// -----------------------
 export default {
   assets,
   menu_list,
   food_list,
   getImageURL,
   getFoodImage,
+  getAsset,
   getCategoryItems,
   getItemById,
   getAllCategories,

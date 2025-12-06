@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "dev:admin": "vite --port 5174",
     "build:admin": "vite build",
-    "preview:admin": "vite preview --port 5173"
+    "preview:admin": "vite preview --port 5174"
   },
   "dependencies": {
     "axios": "^1.7.2",
